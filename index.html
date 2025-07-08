@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PickupBiz Software Pvt Ltd - HTML, CSS, JavaScript MCQ Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .quiz-container { max-width: 800px; }
+        .section { margin-bottom: 2rem; border-bottom: 2px solid #e5e7eb; padding-bottom: 1rem; }
+        .question { margin-bottom: 1.5rem; }
+        .option { margin-left: 1.5rem; }
+        .submit-btn { transition: background-color 0.3s; }
+        .submit-btn:disabled { background-color: #d1d5db; cursor: not-allowed; }
+        .result-container { animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans min-h-screen flex items-center justify-center p-4">
+    <div class="quiz-container mx-auto bg-white rounded-xl shadow-lg p-8">
+        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">PickupBiz Software Pvt Ltd - HTML, CSS, JavaScript MCQ Test</h1>
+        <div id="quiz" class="quiz-content"></div>
+        <div class="text-center">
+            <button id="submit" class="submit-btn bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 disabled:bg-gray-400" disabled>Submit</button>
+        </div>
+        <div id="result" class="result-container mt-8 hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Results</h2>
+            <p id="score" class="text-lg text-gray-700 mb-4"></p>
+            <div id="answers" class="text-gray-600"></div>
+        </div>
+    </div>
+    <script>
+        const quizData = [
+            // HTML Questions (1-20)
+            {
+                question: "What does the <code>&lt;DOCTYPE html&gt;</code> declaration do?",
+                options: ["Defines the document type", "Creates a new HTML element", "Links a stylesheet", "Sets the page title"],
+                answer: "a",
+                explanation: "<code>&lt;DOCTYPE html&gt;</code> informs browsers that the document is HTML5."
+            },
+            {
+                question: "Which HTML tag is used to define a paragraph?",
+                options: ["&lt;div&gt;", "&lt;p&gt;", "&lt;span&gt;", "&lt;section&gt;"],
+                answer: "b",
+                explanation: "The <code>&lt;p&gt;</code> tag defines a paragraph in HTML."
+            },
+            {
+                question: "What is the purpose of the <code>&lt;head&gt;</code> tag?",
+                options: ["Contains page content", "Contains metadata and links", "Defines a header", "Creates a navigation bar"],
+                answer: "b",
+                explanation: "The <code>&lt;head&gt;</code> tag contains metadata, such as title and links to stylesheets."
+            },
+            {
+                question: "Which attribute specifies the URL for an <code>&lt;a&gt;</code> tag?",
+                options: ["src", "href", "alt", "id"],
+                answer: "b",
+                explanation: "The <code>href</code> attribute specifies the URL for a hyperlink in an <code>&lt;a&gt;</code> tag."
+            },
+            {
+                question: "What does the <code>id</code> attribute do in HTML?",
+                options: ["Styles an element", "Uniquely identifies an element", "Links to a file", "Sets the element's text"],
+                answer: "b",
+                explanation: "The <code>id</code> attribute provides a unique identifier for an element, used for styling or scripting."
+            },
+            {
+                question: "Which tag is used to include JavaScript in an HTML file?",
+                options: ["&lt;script&gt;", "&lt;style&gt;", "&lt;link&gt;", "&lt;meta&gt;"],
+                answer: "a",
+                explanation: "The <code>&lt;script&gt;</code> tag is used to include JavaScript code or link to an external script."
+            },
+            {
+                question: "What is the correct HTML tag for an image?",
+                options: ["&lt;img&gt;", "&lt;image&gt;", "&lt;picture&gt;", "&lt;src&gt;"],
+                answer: "a",
+                explanation: "The <code>&lt;img&gt;</code> tag is used to embed images in HTML."
+            },
+            {
+                question: "What does the <code>alt</code> attribute in an <code>&lt;img&gt;</code> tag do?",
+                options: ["Sets the image size", "Provides alternative text", "Links to another page", "Styles the image"],
+                answer: "b",
+                explanation: "The <code>alt</code> attribute provides alternative text for accessibility and when the image fails to load."
+            },
+            {
+                question: "Which HTML tag creates a line break?",
+                options: ["&lt;br&gt;", "&lt;hr&gt;", "&lt;div&gt;", "&lt;nl&gt;"],
+                answer: "a",
+                explanation: "The <code>&lt;br&gt;</code> tag inserts a line break in the text."
+            },
+            {
+                question: "What is the purpose of the <code>&lt;body&gt;</code> tag?",
+                options: ["Contains metadata", "Contains visible page content", "Defines the footer", "Links external resources"],
+                answer: "b",
+                explanation: "The <code>&lt;body&gt;</code> tag contains the visible content of the HTML document."
+            },
+            {
+                question: "Which tag defines a list item in an unordered list?",
+                options: ["&lt;ul&gt;", "&lt;ol&gt;", "&lt;li&gt;", "&lt;dl&gt;"],
+                answer: "c",
+                explanation: "The <code>&lt;li&gt;</code> tag defines a list item in both ordered and unordered lists."
+            },
+            {
+                question: "What does the <code>&lt;meta charset='UTF-8'&gt;</code> tag do?",
+                options: ["Sets the page title", "Specifies the character encoding", "Links a stylesheet", "Defines a meta description"],
+                answer: "b",
+                explanation: "The <code>&lt;meta charset='UTF-8'&gt;</code> tag specifies the character encoding for the document."
+            },
+            {
+                question: "Which HTML tag is used for a table row?",
+                options: ["&lt;td&gt;", "&lt;tr&gt;", "&lt;th&gt;", "&lt;table&gt;"],
+                answer: "b",
+                explanation: "The <code>&lt;tr&gt;</code> tag defines a table row."
+            },
+            {
+                question: "What is the purpose of the <code>&lt;title&gt;</code> tag?",
+                options: ["Sets the page's visible content", "Defines the document's title", "Links to a stylesheet", "Creates a heading"],
+                answer: "b",
+                explanation: "The <code>&lt;title&gt;</code> tag defines the document's title, displayed in the browser's title bar."
+            },
+            {
+                question: "Which attribute makes an input field required?",
+                options: ["required", "mandatory", "validate", "needed"],
+                answer: "a",
+                explanation: "The <code>required</code> attribute ensures an input field must be filled before form submission."
+            },
+            {
+                question: "What does the <code>&lt;div&gt;</code> tag do?",
+                options: ["Creates a paragraph", "Defines a division or section", "Embeds an image", "Links to a URL"],
+                answer: "b",
+                explanation: "The <code>&lt;div&gt;</code> tag is a block-level container for grouping content."
+            },
+            {
+                question: "Which tag is used to create a dropdown menu?",
+                options: ["&lt;select&gt;", "&lt;input&gt;", "&lt;option&gt;", "&lt;dropdown&gt;"],
+                answer: "a",
+                explanation: "The <code>&lt;select&gt;</code> tag, with <code>&lt;option&gt;</code> tags, creates a dropdown menu."
+            },
+            {
+                question: "What is the default type of an <code>&lt;input&gt;</code> tag?",
+                options: ["text", "checkbox", "radio", "submit"],
+                answer: "a",
+                explanation: "The default <code>type</code> attribute for <code>&lt;input&gt;</code> is 'text'."
+            },
+            {
+                question: "Which HTML tag defines a footer?",
+                options: ["&lt;header&gt;", "&lt;footer&gt;", "&lt;section&gt;", "&lt;main&gt;"],
+                answer: "b",
+                explanation: "The <code>&lt;footer&gt;</code> tag defines a footer for a document or section."
+            },
+            {
+                question: "What does the <code>class</code> attribute do in HTML?",
+                options: ["Uniquely identifies an element", "Groups elements for styling", "Sets the element's text", "Links to a script"],
+                answer: "b",
+                explanation: "The <code>class</code> attribute groups elements for CSS or JavaScript manipulation."
+            },
+            // CSS Questions (21-40)
+            {
+                question: "Which CSS property sets the text color of an element?",
+                options: ["background-color", "color", "font-color", "text-color"],
+                answer: "b",
+                explanation: "The <code>color</code> property sets the text color of an element."
+            },
+            {
+                question: "How do you select an element with <code>id='myId'</code> in CSS?",
+                options: [".myId", "#myId", "myId", "*myId"],
+                answer: "b",
+                explanation: "The <code>#myId</code> selector targets an element with the specified ID."
+            },
+            {
+                question: "What does the CSS <code>display: block</code> property do?",
+                options: ["Hides the element", "Makes the element inline", "Takes up the full width", "Floats the element"],
+                answer: "c",
+                explanation: "<code>display: block</code> makes an element take up the full width of its container."
+            },
+            {
+                question: "Which CSS property sets the space between elements?",
+                options: ["padding", "margin", "border", "spacing"],
+                answer: "b",
+                explanation: "The <code>margin</code> property sets the space outside an element."
+            },
+            {
+                question: "What is the default value of the <code>position</code> property in CSS?",
+                options: ["absolute", "relative", "fixed", "static"],
+                answer: "d",
+                explanation: "The default <code>position</code> value is <code>static</code>, placing elements in the normal flow."
+            },
+            {
+                question: "How do you center an element horizontally in CSS?",
+                options: ["text-align: center", "margin: auto", "align: center", "center: true"],
+                answer: "b",
+                explanation: "<code>margin: auto</code> centers a block element horizontally when combined with a set width."
+            },
+            {
+                question: "Which CSS property controls the font size?",
+                options: ["font-size", "text-size", "font-style", "size"],
+                answer: "a",
+                explanation: "The <code>font-size</code> property sets the size of the text."
+            },
+            {
+                question: "What does <code>float: left</code> do in CSS?",
+                options: ["Aligns text to the left", "Moves the element to the left", "Hides the element", "Centers the element"],
+                answer: "b",
+                explanation: "<code>float: left</code> moves an element to the left, allowing content to wrap around it."
+            },
+            {
+                question: "How do you select all elements with class <code>myClass</code>?",
+                options: ["#myClass", ".myClass", "*myClass", "myClass"],
+                answer: "b",
+                explanation: "The <code>.myClass</code> selector targets all elements with the specified class."
+            },
+            {
+                question: "What does the <code>z-index</code> property control?",
+                options: ["Element opacity", "Stacking order", "Font size", "Border thickness"],
+                answer: "b",
+                explanation: "The <code>z-index</code> property controls the stacking order of positioned elements."
+            },
+            {
+                question: "Which CSS property sets the background color?",
+                options: ["color", "background-color", "bg-color", "fill"],
+                answer: "b",
+                explanation: "The <code>background-color</code> property sets the background color of an element."
+            },
+            {
+                question: "What does <code>display: none</code> do?",
+                options: ["Hides the element", "Makes it inline", "Centers the element", "Increases opacity"],
+                answer: "a",
+                explanation: "<code>display: none</code> removes an element from the document flow, hiding it."
+            },
+            {
+                question: "Which CSS property controls the space inside an element?",
+                options: ["margin", "padding", "border", "gap"],
+                answer: "b",
+                explanation: "The <code>padding</code> property sets the space inside an element's border."
+            },
+            {
+                question: "How do you apply a style to all <code>&lt;p&gt;</code> elements in CSS?",
+                options: ["p {}", "#p {}", ".p {}", "*p {}"],
+                answer: "a",
+                explanation: "The <code>p</code> selector targets all <code>&lt;p&gt;</code> elements."
+            },
+            {
+                question: "What does <code>box-sizing: border-box</code> do?",
+                options: ["Excludes padding and border from width", "Includes padding and border in width", "Hides the element", "Centers the element"],
+                answer: "b",
+                explanation: "<code>box-sizing: border-box</code> includes padding and border in the element's total width and height."
+            },
+            {
+                question: "Which CSS property sets the text alignment?",
+                options: ["text-align", "align-text", "font-align", "text-position"],
+                answer: "a",
+                explanation: "The <code>text-align</code> property sets the horizontal alignment of text."
+            },
+            {
+                question: "What does the <code>:hover</code> pseudo-class do?",
+                options: ["Styles an element on click", "Styles an element on mouseover", "Styles an active element", "Styles a visited link"],
+                answer: "b",
+                explanation: "The <code>:hover</code> pseudo-class applies styles when the mouse pointer hovers over an element."
+            },
+            {
+                question: "Which CSS unit is relative to the font size of the root element?",
+                options: ["px", "em", "rem", "%"],
+                answer: "c",
+                explanation: "The <code>rem</code> unit is relative to the font size of the root element."
+            },
+            {
+                question: "What does <code>opacity: 0.5</code> do?",
+                options: ["Hides the element", "Sets 50% transparency", "Changes the font size", "Centers the element"],
+                answer: "b",
+                explanation: "<code>opacity: 0.5</code> makes an element 50% transparent."
+            },
+            {
+                question: "How do you link an external CSS file to HTML?",
+                options: ["&lt;script src='style.css'&gt;", "&lt;style src='style.css'&gt;", "&lt;link rel='stylesheet' href='style.css'&gt;", "&lt;css href='style.css'&gt;"],
+                answer: "c",
+                explanation: "The <code>&lt;link&gt;</code> tag with <code>rel='stylesheet'</code> and <code>href</code> links an external CSS file."
+            },
+            // JavaScript Questions (41-60)
+            {
+                question: "What is a closure in JavaScript?",
+                options: ["A function with no parameters", "A function accessing outer scope variables", "A global variable", "A block-scoped variable"],
+                answer: "b",
+                explanation: "A closure allows a function to access variables from its outer scope, even after the outer function has executed."
+            },
+            {
+                question: "What is the output of <code>function outerFunc() { let age = 25; function innerFunc() { age = age + 5; console.log(age); } innerFunc(); } outerFunc();</code>?",
+                options: ["25", "30", "undefined", "ReferenceError"],
+                answer: "b",
+                explanation: "<code>innerFunc</code> modifies <code>age</code> via closure to 30, which is logged."
+            },
+            {
+                question: "In <code>function outerFunc() { let age = 25; console.log('First----->', age); function innerFunc() { age = age + 5; console.log('Second------>', age); } console.log('Third-------->', age); innerFunc(); console.log('Fourth------>', age); } outerFunc();</code>, what is <code>First-----></code>?",
+                options: ["25", "30", "undefined", "ReferenceError"],
+                answer: "a",
+                explanation: "<code>First-----></code> logs <code>age</code> before modification, outputting 25."
+            },
+            {
+                question: "What is the output of <code>Second------></code> in the second snippet?",
+                options: ["25", "30", "undefined", "ReferenceError"],
+                answer: "b",
+                explanation: "<code>innerFunc</code> modifies <code>age</code> to 30, logged as <code>Second------></code>."
+            },
+            {
+                question: "What is the output of <code>Third--------></code> in the second snippet?",
+                options: ["25", "30", "undefined", "ReferenceError"],
+                answer: "a",
+                explanation: "<code>Third--------></code> logs <code>age</code> before <code>innerFunc</code> modifies it, outputting 25."
+            },
+            {
+                question: "What is the output of <code>Fourth------></code> in the second snippet?",
+                options: ["25", "30", "undefined", "ReferenceError"],
+                answer: "b",
+                explanation: "After <code>innerFunc</code> modifies <code>age</code>, <code>Fourth------></code> logs 30."
+            },
+            {
+                question: "In <code>function outerFunc() { let age = 25; console.log('First----->', age); function innerFunc() { let age = 30; console.log('Second------>', age); } console.log('Third-------->', age); innerFunc(); console.log('Fourth------>', age); } outerFunc();</code>, what is <code>Second------></code>?",
+                options: ["25", "30", "undefined", "ReferenceError"],
+                answer: "b",
+                explanation: "The inner <code>let age = 30</code> shadows the outer <code>age</code>, so <code>Second------></code> outputs 30."
+            },
+            {
+                question: "What is the output of <code>Fourth------></code> in the third snippet?",
+                options: ["25", "30", "undefined", "ReferenceError"],
+                answer: "a",
+                explanation: "The inner <code>age</code> is separate, so the outer <code>age</code> remains 25 for <code>Fourth------></code>."
+            },
+            {
+                question: "What concept causes the inner <code>age</code> to be separate in the third snippet?",
+                options: ["Hoisting", "Closure", "Variable shadowing", "Global scope"],
+                answer: "c",
+                explanation: "Variable shadowing creates a separate <code>age</code> variable in the inner scope."
+            },
+            {
+                question: "In <code>const person = { fname: 'Ramesh', mname: 'Kumar', lname: 'Kishori' }; function setValues() { const fnameText = document.getElementById('fname'); fnameText.innerHTML = person.fname; }</code>, what does <code>fnameText.innerHTML</code> do?",
+                options: ["Gets the text content", "Sets the HTML content", "Removes the element", "Styles the element"],
+                answer: "b",
+                explanation: "<code>innerHTML</code> sets the HTML content of the element to <code>person.fname</code> ('Ramesh')."
+            },
+            {
+                question: "What is the value of <code>person.lname</code> in the DOM code?",
+                options: ["Ramesh", "Kumar", "Kishori", "undefined"],
+                answer: "c",
+                explanation: "<code>person.lname</code> is 'Kishori' as defined in the <code>person</code> object."
+            },
+            {
+                question: "What happens if <code>document.getElementById('fname')</code> returns <code>null</code>?",
+                options: ["No error occurs", "Throws TypeError", "Throws ReferenceError", "Outputs undefined"],
+                answer: "b",
+                explanation: "Setting <code>innerHTML</code> on <code>null</code> throws a TypeError."
+            },
+            {
+                question: "What is the scope of <code>age</code> in <code>innerFunc</code> in the first snippet?",
+                options: ["Global scope", "Function scope", "Block scope", "Closure scope"],
+                answer: "d",
+                explanation: "<code>innerFunc</code> accesses <code>age</code> from the outer function via a closure."
+            },
+            {
+                question: "What will <code>console.log(typeof person);</code> output in the DOM code?",
+                options: ["string", "object", "array", "undefined"],
+                answer: "b",
+                explanation: "<code>person</code> is an object, so <code>typeof person</code> returns 'object'."
+            },
+            {
+                question: "What does <code>var</code> do when declaring a variable?",
+                options: ["Creates a block-scoped variable", "Creates a function-scoped variable", "Prevents reassignment", "Throws an error"],
+                answer: "b",
+                explanation: "<code>var</code> declares a function-scoped or global variable, subject to hoisting."
+            },
+            {
+                question: "What will <code>console.log(x); var x = 10;</code> output?",
+                options: ["10", "undefined", "ReferenceError", "null"],
+                answer: "b",
+                explanation: "<code>var x</code> is hoisted, so <code>x</code> is <code>undefined</code> before assignment."
+            },
+            {
+                question: "What happens if you reassign a <code>const</code> variable?",
+                options: ["It updates", "Throws TypeError", "Throws SyntaxError", "No error"],
+                answer: "b",
+                explanation: "<code>const</code> prevents reassignment, throwing a TypeError if attempted."
+            },
+            {
+                question: "What is the output of <code>function test() { let x = 5; { let x = 10; } console.log(x); }</code>?",
+                options: ["5", "10", "undefined", "ReferenceError"],
+                answer: "a",
+                explanation: "<code>let</code> is block-scoped, so the inner <code>x</code> is separate, and the outer <code>x</code> is 5."
+            },
+            {
+                question: "What will <code>function test() { x = 10; } test(); console.log(x);</code> output?",
+                options: ["10", "undefined", "ReferenceError", "TypeError"],
+                answer: "a",
+                explanation: "Without a keyword, <code>x = 10</code> creates a global variable, so <code>console.log(x)</code> outputs 10."
+            },
+            {
+                question: "What is the output of <code>const func = () => 42; console.log(func());</code>?",
+                options: ["42", "undefined", "ReferenceError", "TypeError"],
+                answer: "a",
+                explanation: "The arrow function <code>func</code> returns 42 when called."
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz');
+        const submitBtn = document.getElementById('submit');
+        const resultDiv = document.getElementById('result');
+        const scoreText = document.getElementById('score');
+        const answersDiv = document.getElementById('answers');
+
+        const renderQuiz = () => {
+            const sections = [
+                { title: "HTML Questions", start: 0, end: 20 },
+                { title: "CSS Questions", start: 20, end: 40 },
+                { title: "JavaScript Questions", start: 40, end: 60 }
+            ];
+            quizContainer.innerHTML = sections.map(section => `
+                <div class="section">
+                    <h2 class="text-xl font-semibold text-gray-700 mb-4">${section.title}</h2>
+                    ${quizData.slice(section.start, section.end).map((q, index) => `
+                        <div class="question">
+                            <p class="font-semibold text-gray-800">${section.start + index + 1}. ${q.question}</p>
+                            ${q.options.map((option, i) => `
+                                <label class="option block my-2">
+                                    <input type="radio" name="q${section.start + index + 1}" value="${String.fromCharCode(97 + i)}" class="mr-2">
+                                    ${option}
+                                </label>
+                            `).join('')}
+                        </div>
+                    `).join('')}
+                </div>
+            `).join('');
+            checkAllAnswered();
+        };
+
+        const checkAllAnswered = () => {
+            const allQuestions = document.querySelectorAll('input[type="radio"]:checked').length;
+            submitBtn.disabled = allQuestions < quizData.length;
+        };
+
+        const displayResults = () => {
+            let score = 0;
+            answersDiv.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const qIndex = index + 1;
+                const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `<p class="font-semibold text-gray-800">${qIndex}. ${q.question}</p>`;
+
+                if (selected && selected.value === q.answer) {
+                    score++;
+                    questionDiv.innerHTML += `<p class="text-green-600">Correct! ${q.explanation}</p>`;
+                } else {
+                    const userAnswer = selected ? selected.nextSibling.textContent.trim() : 'No answer selected';
+                    const correctAnswer = q.options[q.answer.charCodeAt(0) - 97];
+                    questionDiv.innerHTML += `<p class="text-red-600">Incorrect. Your answer: ${userAnswer}. Correct answer: ${correctAnswer}. ${q.explanation}</p>`;
+                }
+                answersDiv.appendChild(questionDiv);
+            });
+
+            scoreText.textContent = `Your score: ${score}/${quizData.length}`;
+            resultDiv.classList.remove('hidden');
+        };
+
+        quizContainer.addEventListener('change', checkAllAnswered);
+        submitBtn.addEventListener('click', displayResults);
+        renderQuiz();
+    </script>
+</body>
+</html>
